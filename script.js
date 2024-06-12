@@ -93,13 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
         resultSection.appendChild(resultList);
     }
 
+    // Fonction pour réinitialiser la dictée
+    function resetDictation() {
+        resultSection.style.display = 'none';
+        dictationSection.style.display = 'none';
+        document.getElementById('input-section').style.display = 'block';
+        resultSection.innerHTML = '<h2>Résultats</h2><p id="score" class="lead"></p><button class="btn btn-secondary btn-block" id="retry-button">Réessayer</button>';
+        const newRetryButton = document.getElementById('retry-button');
+        newRetryButton.addEventListener('click', resetDictation);
+    }
+
     // Gestion des événements des boutons
     startButton.addEventListener('click', startDictation);
     repeatButton.addEventListener('click', () => speakWord(words[currentWordIndex]));
     nextButton.addEventListener('click', checkWord);
-    retryButton.addEventListener('click', () => {
-        resultSection.style.display = 'none';
-        document.getElementById('input-section').style.display = 'block';
-        resultSection.innerHTML = '<h2>Résultats</h2><p id="score" class="lead"></p><button class="btn btn-secondary btn-block" id="retry-button">Réessayer</button>';
-    });
+    retryButton.addEventListener('click', resetDictation);
 });
